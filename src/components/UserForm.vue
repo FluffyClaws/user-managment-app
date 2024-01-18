@@ -1,17 +1,29 @@
 <template>
-  <form @submit.prevent="submitForm">
-    <div>
-      <label for="name">Name:</label>
-      <input id="name" v-model="name" type="text" required />
-      <span v-if="nameError">{{ nameError }}</span>
-    </div>
-    <div>
-      <label for="email">Email:</label>
-      <input id="email" v-model="email" type="email" required />
-      <span v-if="emailError">{{ emailError }}</span>
-    </div>
-    <button type="submit">Add User</button>
-  </form>
+  <div class="user-form">
+    <form @submit.prevent="submitForm">
+      <div class="form-group">
+        <input
+          id="name"
+          v-model="name"
+          type="text"
+          required
+          placeholder="Enter your name"
+        />
+        <span v-if="nameError">{{ nameError }}</span>
+      </div>
+      <div class="form-group">
+        <input
+          id="email"
+          v-model="email"
+          type="email"
+          required
+          placeholder="Enter your email"
+        />
+        <span v-if="emailError">{{ emailError }}</span>
+      </div>
+      <button type="submit">Add User</button>
+    </form>
+  </div>
 </template>
 
 <script>

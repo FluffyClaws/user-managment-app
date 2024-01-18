@@ -1,12 +1,14 @@
 <template>
   <div id="app">
-    <user-form @user-added="addUser"></user-form>
-    <user-list
-      :users="users"
-      @user-deleted="handleUserDeletion"
-      @update-phone="handlePhoneUpdate"
-      @update-address="handleAddressUpdate"
-    ></user-list>
+    <div class="container">
+      <user-form @user-added="addUser"></user-form>
+      <user-list
+        :users="users"
+        @user-deleted="handleUserDeletion"
+        @update-phone="handlePhoneUpdate"
+        @update-address="handleAddressUpdate"
+      ></user-list>
+    </div>
   </div>
 </template>
 
@@ -14,6 +16,7 @@
 import UserList from "./components/UserList.vue";
 import UserForm from "./components/UserForm.vue";
 import axios from "axios";
+import "./styles/styles.less";
 
 export default {
   name: "App",

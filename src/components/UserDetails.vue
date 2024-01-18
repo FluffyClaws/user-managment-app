@@ -1,21 +1,40 @@
 <template>
   <div v-if="user" class="modal">
-    <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p>
-      <strong>Phone:</strong>
+    <img
+      v-if="user.avatar"
+      :src="user.avatar"
+      alt="User avatar"
+      class="avatar"
+    />
+    <div v-else class="avatar-placeholder"></div>
+
+    <h3>{{ formatName(user.first_name, user.last_name) }}</h3>
+    <p>{{ user.email }}</p>
+    <div class="user-detail">
+      <strong>Phone: </strong>
       <span v-if="!editingPhone">{{ user.phone || "Not provided" }}</span>
-      <input v-else v-model="editablePhone" type="text" />
+      <input
+        v-else
+        v-model="editablePhone"
+        type="text"
+        class="editable-input"
+      />
       <button v-if="!editingPhone" @click="editPhone">Edit</button>
       <button v-else @click="savePhone">Save</button>
-    </p>
-    <p>
-      <strong>Address:</strong>
+    </div>
+
+    <div class="user-detail">
+      <strong>Address: </strong>
       <span v-if="!editingAddress">{{ user.address || "Not provided" }}</span>
-      <input v-else v-model="editableAddress" type="text" />
+      <input
+        v-else
+        v-model="editableAddress"
+        type="text"
+        class="editable-input"
+      />
       <button v-if="!editingAddress" @click="editAddress">Edit</button>
       <button v-else @click="saveAddress">Save</button>
-    </p>
+    </div>
     <button @click="close">Close</button>
   </div>
 </template>
@@ -31,8 +50,8 @@ export default {
     return {
       editingPhone: false,
       editingAddress: false,
-      editablePhone: "",
-      editableAddress: "",
+      editablePhone: this.user ? this.user.phone : "",
+      editableAddress: this.user ? this.user.address : "",
     };
   },
   methods: {
@@ -75,8 +94,11 @@ export default {
         })
         .catch((error) => console.error("Error updating address", error));
     },
+    formatName(firstName, lastName) {
+      return (
+        `${firstName || ""} ${lastName || ""}`.trim() || "No name provided"
+      );
+    },
   },
 };
 </script>
-
-<style></style>

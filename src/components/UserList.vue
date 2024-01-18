@@ -1,32 +1,39 @@
 <template>
-  <div>
-    <input type="text" v-model="searchQuery" placeholder="Search users..." />
+  <div class="user-list">
+    <input
+      type="text"
+      v-model="searchQuery"
+      placeholder="Search users..."
+      class="search-input"
+    />
     <ul>
-      <li v-for="user in filteredUsers" :key="user.id">
-        <img
-          v-if="user.avatar"
-          :src="user.avatar"
-          alt="User avatar"
-          class="avatar"
-        />
-        <span v-else class="avatar-placeholder"></span>
-        <a @click.prevent="showDetails(user)">
-          {{ formatName(user.first_name, user.last_name) }}
-          <span v-if="!user.first_name && !user.last_name"
-            >No name provided</span
-          >
-        </a>
-        - {{ user.email }}
-        <button @click="deleteUser(user.id)">Delete</button>
+      <li v-for="user in filteredUsers" :key="user.id" class="user-item">
+        <!-- Render user card -->
+        <div v-if="selectedUserId !== user.id" class="user-card">
+          <img
+            v-if="user.avatar"
+            :src="user.avatar"
+            alt="User avatar"
+            class="avatar"
+          />
+          <div v-if="!user.avatar" class="avatar-placeholder">
+            {{ user.first_name.charAt(0) }}{{ user.last_name.charAt(0) }}
+          </div>
+          <div class="user-content">
+            <!-- Click on the user's name to show details -->
+            <h3 @click="showDetails(user)">
+              {{ formatName(user.first_name, user.last_name) }}
+            </h3>
+            <p>{{ user.email }}</p>
+          </div>
+          <button @click.stop="deleteUser(user.id)" class="delete-button">
+            Delete
+          </button>
+        </div>
+        <!-- Render user details if the user is selected -->
+        <user-details v-else :user="user" @close="selectedUserId = null" />
       </li>
     </ul>
-    <user-details
-      v-if="currentUser"
-      :user="currentUser"
-      @close="selectedUserId = null"
-      @update-phone="$emit('update-phone', $event)"
-      @update-address="$emit('update-address', $event)"
-    ></user-details>
   </div>
 </template>
 
@@ -98,12 +105,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-</style>
