@@ -1,16 +1,14 @@
 <template>
   <form @submit.prevent="submitForm">
     <div>
-      <label for="firstName">First Name:</label>
-      <input id="firstName" v-model="firstName" type="text" required />
-    </div>
-    <div>
-      <label for="lastName">Last Name:</label>
-      <input id="lastName" v-model="lastName" type="text" required />
+      <label for="name">Name:</label>
+      <input id="name" v-model="name" type="text" required />
+      <span v-if="nameError">{{ nameError }}</span>
     </div>
     <div>
       <label for="email">Email:</label>
       <input id="email" v-model="email" type="email" required />
+      <span v-if="emailError">{{ emailError }}</span>
     </div>
     <button type="submit">Add User</button>
   </form>
@@ -22,26 +20,44 @@ import axios from "axios";
 export default {
   data() {
     return {
-      firstName: "",
-      lastName: "",
+      name: "",
       email: "",
+      nameError: "",
+      emailError: "",
     };
   },
   methods: {
+    validateForm() {
+      this.nameError = "";
+      this.emailError = "";
+
+      if (!this.name) {
+        this.nameError = "Name is required";
+      }
+      if (!this.email.includes("@")) {
+        this.emailError = "Email is invalid";
+      }
+
+      return this.nameError === "" && this.emailError === "";
+    },
     submitForm() {
+      if (!this.validateForm()) {
+        return;
+      }
+
+      const splitName = this.name.split(" ");
       const userData = {
-        first_name: this.firstName,
-        last_name: this.lastName,
+        first_name: splitName[0],
+        last_name: splitName.slice(1).join(" ") || "",
         email: this.email,
       };
+
       axios
         .post("https://reqres.in/api/users", userData)
         .then((response) => {
-          console.log(response.data);
-          this.firstName = "";
-          this.lastName = "";
+          this.$emit("user-added", { ...response.data, ...userData });
+          this.name = "";
           this.email = "";
-          this.$emit("user-added");
         })
         .catch((error) => {
           console.error(error);
