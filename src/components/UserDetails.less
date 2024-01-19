@@ -1,0 +1,119 @@
+@import "../styles/variables.less";
+@import "../styles/mixins.less";
+.modal,
+.user-item,
+li {
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  padding: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(33.333% - 20px);
+  height: auto;
+  font-size: 15px;
+  button {
+    margin-top: 0px;
+  }
+  .user-detail {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    strong {
+      min-width: 70px;
+    }
+    span {
+      flex-grow: 1;
+      margin: 0 5px;
+      display: flex;
+      align-items: center;
+    }
+    .editable-input {
+      flex-grow: 1;
+      margin: 0 5px;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.modal,
+.user-item {
+  .modal-and-user-item-styles();
+}
+
+.modal h3,
+.modal p,
+.user-content h3,
+.user-content p {
+  margin: 5px 10px;
+  font-size: 15px;
+
+  span {
+    margin-right: 5px;
+  }
+}
+
+.modal .avatar,
+.modal .avatar-placeholder,
+.avatar,
+.avatar-placeholder {
+  border-radius: 50%;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: #333;
+
+  width: 80px;
+  height: 80px;
+  background-color: @background-color;
+
+  .modal & {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.modal button,
+button {
+  .button-styles();
+  margin-top: 0px;
+}
+
+.modal button {
+  padding: 5px 10px;
+  font-size: 10px;
+  line-height: normal;
+  align-self: center;
+  text-align: center;
+}
+
+.modal input[type="text"] {
+  font-size: 0.875rem;
+  padding: 5px;
+  width: 50%;
+  height: 10px;
+}
+
+.user-list,
+.user-content,
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}

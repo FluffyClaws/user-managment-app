@@ -1,0 +1,25 @@
+.button-styles() {
+  background: @button-color;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+
+  &:hover {
+    background: darken(@button-color, 10%);
+  }
+}
+
+.modal-and-user-item-styles() {
+  background: white;
+  border-radius: 5px;
+  padding: 15px;
+  width: calc(33.333% - 145px);
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}

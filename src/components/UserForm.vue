@@ -9,7 +9,7 @@
           required
           placeholder="Enter your name"
         />
-        <span v-if="nameError">{{ nameError }}</span>
+        <span v-if="errors.name">{{ errors.name }}</span>
       </div>
       <div class="form-group">
         <input
@@ -19,7 +19,7 @@
           required
           placeholder="Enter your email"
         />
-        <span v-if="emailError">{{ emailError }}</span>
+        <span v-if="errors.email">{{ errors.email }}</span>
       </div>
       <button type="submit">Add User</button>
     </form>
@@ -27,32 +27,31 @@
 </template>
 
 <script>
-import axios from "axios";
+import UserService from "../services/UserService";
+import "./UserForm.less";
 
 export default {
   data() {
     return {
       name: "",
       email: "",
-      nameError: "",
-      emailError: "",
+      errors: {},
     };
   },
   methods: {
     validateForm() {
-      this.nameError = "";
-      this.emailError = "";
+      this.errors = {};
 
       if (!this.name) {
-        this.nameError = "Name is required";
+        this.errors.name = "Name is required";
       }
       if (!this.email.includes("@")) {
-        this.emailError = "Email is invalid";
+        this.errors.email = "Email is invalid";
       }
 
-      return this.nameError === "" && this.emailError === "";
+      return Object.keys(this.errors).length === 0;
     },
-    submitForm() {
+    async submitForm() {
       if (!this.validateForm()) {
         return;
       }
@@ -64,16 +63,14 @@ export default {
         email: this.email,
       };
 
-      axios
-        .post("https://reqres.in/api/users", userData)
-        .then((response) => {
-          this.$emit("user-added", { ...response.data, ...userData });
-          this.name = "";
-          this.email = "";
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      try {
+        const addedUser = await UserService.addUser(userData);
+        this.$emit("user-added", addedUser);
+        this.name = "";
+        this.email = "";
+      } catch (error) {
+        console.error("Error adding user", error);
+      }
     },
   },
 };
