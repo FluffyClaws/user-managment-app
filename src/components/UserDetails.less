@@ -1,12 +1,5 @@
 @import "../styles/variables.less";
 @import "../styles/mixins.less";
-.modal,
-.user-item,
-li {
-  background: white;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
 
 .modal {
   position: absolute;
@@ -66,9 +59,7 @@ li {
 }
 
 .modal .avatar,
-.modal .avatar-placeholder,
-.avatar,
-.avatar-placeholder {
+.modal .avatar-placeholder {
   border-radius: 50%;
   margin-bottom: 10px;
   display: flex;
@@ -77,14 +68,9 @@ li {
   font-size: 2rem;
   color: #333;
 
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
   background-color: @background-color;
-
-  .modal & {
-    width: 40px;
-    height: 40px;
-  }
 }
 
 .modal button,
@@ -108,8 +94,6 @@ button {
   height: 10px;
 }
 
-.user-list,
-.user-content,
 .modal {
   display: flex;
   flex-direction: column;
