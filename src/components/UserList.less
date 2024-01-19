@@ -1,0 +1,74 @@
+@import "../styles/variables.less";
+@import "../styles/mixins.less";
+.user-item,
+li {
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.user-list,
+.user-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.user-card,
+.user-item,
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.user-card,
+.user-item {
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-item {
+  margin: 10px;
+  padding: 15px;
+  width: calc(33.333% - 80px);
+  position: relative;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+li {
+  margin: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar,
+.avatar-placeholder {
+  border-radius: 50%;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: #333;
+
+  width: 80px;
+  height: 80px;
+  background-color: @background-color;
+}
